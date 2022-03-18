@@ -1,0 +1,17 @@
+.form-container{
+    display: block;
+    max-width: 300px;
+    margin: auto;
+    /* background-color: rgb(56, 70, 82); */
+    background: linear-gradient(45deg, #111134, #0d09f96b);
+    padding: 48px;
+    border-radius: 20px;
+}
+
+form mat-form-filed{
+    width: 100%;
+}
+.centre{
+    display: flex;
+    justify-content: center;
+}
