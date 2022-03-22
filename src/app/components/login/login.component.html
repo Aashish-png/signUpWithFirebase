@@ -1,24 +1,30 @@
 <section>
-<div class="form-container mat-elevation-z2">
-    <h1>Login </h1>
-<form [formGroup]="loginForm" (ngSubmit)="submit()">
-    <mat-form-field> 
-        <input matInput placeholder="enter your Email" formControlName="email">
-        <mat-error *ngIf="email?.errors?.['required']">email is required</mat-error>
-        <mat-error *ngIf="email?.errors?.['email']">plsese enter correct email format</mat-error>
-    </mat-form-field> 
-    <mat-form-field> 
-        <input matInput placeholder="Enter your password" formControlName="password" type="password">
-        <mat-error *ngIf="email?.errors?.['required']">password is required</mat-error>
-        
-    </mat-form-field> 
+    <div class="form-container mat-elevation-z2">
+        <h1>Login </h1>
+        <form [formGroup]="loginForm" (ngSubmit)="submit()">
+            <mat-form-field>
+                <input matInput placeholder="enter your Email" formControlName="email">
+                <mat-error *ngIf="email?.errors?.['required']">email is required</mat-error>
+                <mat-error *ngIf="email?.errors?.['email']">plsese enter correct email format</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Enter your password" formControlName="password" type="password">
+                <mat-error *ngIf="email?.errors?.['required']">password is required</mat-error>
 
-    <button class="centre" mat-raised-button color="primary" type="submit">Login</button>
-    <span class="centre">new User ?<a routerLink="/Sign-up">Sign-Up</a></span>
-    
-</form>
-<button mat-button color="primary" (click)="SignInGoogle()">Sign In With Google</button>
+            </mat-form-field>
 
-</div>
+            <button class="centre" mat-raised-button color="primary" type="submit">Login</button>
+            <span class="centre">new User ?<a routerLink="/Sign-up">Sign-Up</a></span>
+
+        </form>
+        <a class="btnG" (click)="SignInGoogle()">
+            <div class="card1">
+                <img src="../../../assets/download.png" alt="">
+            </div>
+        </a>
+
+        <button (click)="SignInFB()"> log in with Facebook</button>
+
+    </div>
 
 </section>

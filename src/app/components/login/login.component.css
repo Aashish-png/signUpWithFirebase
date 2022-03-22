@@ -15,5 +15,22 @@ form mat-form-filed{
     display: flex;
     justify-content: center;
 }
+/* .btnG{
+    /* background-image: url('/src/assets/sn.png'); */
+    /* border-radius: 10px;
+    background-color: coral;
+    background-size:cover;
+    margin: auto;
+    padding: 10px;
+} */
 
+
+.card1 img{
+    margin: 0;
+    padding: 0;
+    width: 200px;
+
+    box-sizing: border-box;
+    
+}
 

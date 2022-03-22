@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Auth } from '@angular/fire/auth';
+import { Auth, FacebookAuthProvider } from '@angular/fire/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
   );
 
   constructor( private authService:AuthenticationService,
-    private auth:Auth,
+    
      private router:Router,
     private toast:HotToastService
     
@@ -37,6 +37,8 @@ export class LoginComponent implements OnInit {
     get password(){
       return this.loginForm.get('password');
     }
+
+    //submit fucntion
      submit(){
        if(!this.loginForm.valid){
          return;
@@ -49,16 +51,23 @@ export class LoginComponent implements OnInit {
          loading:'logging in ...',
          error:'there was an error'
        })
-     ).subscribe(()=>{
+     ).subscribe(()=>{          
        this.router.navigate(['/home']);
      });
     }
 
+
+    //sign in with google 
     SignInGoogle() {
       this.authService.googleSignIn(new GoogleAuthProvider).subscribe(()=>{
         this.router.navigate(['/home']);
       });
     }
-    
+    //sign in with facebook 
+    SignInFB(){
+      this.authService.facbookSingIN(new FacebookAuthProvider).subscribe(()=>{
+        this.router.navigate(['/home']);
+      })
+    }
 
 }
