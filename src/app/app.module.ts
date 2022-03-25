@@ -7,6 +7,9 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { AngularFireModule } from "@angular/fire/compat";
+import { FormsModule } from '@angular/forms';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { getStorage, provideStorage } from '@angular/fire/storage';
 
 
 import { AppComponent } from './app.component';
@@ -23,7 +26,10 @@ import { HotToastModule } from '@ngneat/hot-toast';
 import { provideFirebaseApp } from '@angular/fire/app';
 import { getAuth } from 'firebase/auth';
 import { provideAuth } from '@angular/fire/auth';
-
+import { MatMenuModule } from '@angular/material/menu';
+import { ShowdataComponent } from './components/showdata/showdata.component';
+import { CrudService } from './services/crud.service';
+import { UpdateComponent } from './components/update/update.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +37,9 @@ import { provideAuth } from '@angular/fire/auth';
     LandingComponent,
     LoginComponent,
     SignUpComponent,
-    HomeComponent
+    HomeComponent,
+    ShowdataComponent,
+    UpdateComponent
   ],
   imports: [
     BrowserModule,
@@ -42,15 +50,18 @@ import { provideAuth } from '@angular/fire/auth';
     MatInputModule,
     MatToolbarModule,
     ReactiveFormsModule,
+    MatMenuModule,
     MatButtonModule,
     AppRoutingModule,
     CommonModule,
+    FormsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
     HotToastModule.forRoot()
    
   ],
-  providers: [],
+  providers: [CrudService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

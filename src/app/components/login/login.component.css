@@ -15,14 +15,15 @@ form mat-form-filed{
     display: flex;
     justify-content: center;
 }
-/* .btnG{
-    /* background-image: url('/src/assets/sn.png'); */
-    /* border-radius: 10px;
-    background-color: coral;
+.btnG{
+    
+     /* border-radius: 10px; */
+    background-color: rgb(0, 0, 0);
     background-size:cover;
-    margin: auto;
-    padding: 10px;
-} */
+    margin: 0;
+    padding: 0px;
+    margin-top: 5px;
+}
 
 
 .card1 img{
@@ -30,7 +31,32 @@ form mat-form-filed{
     padding: 0;
     width: 200px;
 
-    box-sizing: border-box;
+    box-sizing:content-box;
     
 }
+.btnFB{
 
+        margin-top: 5%;
+        padding: 4%;
+        background-color: #000000;
+        color: #3a559f;
+        font-style: bold;
+        font-size: medium;
+        font-family:  inherit;
+        border-radius: 10px;
+        text-align: center;
+    
+}
+.btnFB img{
+    margin: 0;
+    padding: 0;
+    width: 23px;
+    position: relative;
+    top: 6px;
+    box-sizing:content-box;
+    margin-right: 5px;
+}
+
+.btnFB:hover{
+    background-color: white;
+}

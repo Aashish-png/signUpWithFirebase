@@ -6,7 +6,7 @@
             <form required #basic="ngForm"  class="container" >
                 
                 <label for="name">Name</label><br>
-                <input type="text" required #name="ngModel" [(ngModel)]="showData.name" for="name" name="name">
+                <input type="text" required #name="ngModel" [(ngModel)]="showData.name" for="name" name="Uname">
                 <div class="div1" *ngIf=" name.invalid && name.touched ">Please Enter Vaild Name</div>
                 <br>
     
@@ -20,10 +20,10 @@
                 <div class="div1" *ngIf=" number.invalid && number.touched ">Please Enter Phone Number</div>
                 <label for="City">City</label><br>
                 <input type="text" [(ngModel)]="showData.city" for="city " name="city"><br>
-    
-                <button  [disabled]="basic.invalid" (click)="saveData()" mat-raised-button color="primary">Submit</button>
+                    
+                <button  [disabled]="basic.invalid" (click)="UpdateData(id)" mat-raised-button color="primary">Update</button>
                     <div class="div1" style="color: rgba(128, 255, 0, 0.678);">{{msg}}</div>
-                 
+                <div>{{msg}}</div>
             </form>
         </div>
     </section>

@@ -1,10 +1,21 @@
 mat-toolbar{
     justify-content:space-between ;
+    
 }
 .content{
-    padding: 32px;
+    padding: 0px;
 }
 
 body.mat-typography {
     background-color: #1e3244f5;
 }
+ul{
+display: contents;
+    position:absolute;
+    justify-self: start;
+    /* margin: 50; */
+    list-style: none;
+}
+/* .btn3{
+margin: 20%;
+} */

@@ -5,8 +5,8 @@ import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
  
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import{ GoogleAuthProvider, signInWithPopup}from '@angular/fire/auth'
-import { from } from 'rxjs';
+import{ GoogleAuthProvider, }from '@angular/fire/auth'
+
 
 @Component({
   selector: 'app-login',
@@ -14,6 +14,7 @@ import { from } from 'rxjs';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  
 
   loginForm = new FormGroup(
     { 
@@ -49,7 +50,7 @@ export class LoginComponent implements OnInit {
        this.toast.observe({
          success:'Logged in successfully',
          loading:'logging in ...',
-         error:'there was an error'
+         error:({ message }) => `There was an error: ${message} `
        })
      ).subscribe(()=>{          
        this.router.navigate(['/home']);
@@ -59,15 +60,32 @@ export class LoginComponent implements OnInit {
 
     //sign in with google 
     SignInGoogle() {
-      this.authService.googleSignIn(new GoogleAuthProvider).subscribe(()=>{
+      
+      this.authService.googleSignIn(new GoogleAuthProvider).pipe(
+        this.toast.observe({
+          success:'Logged in successfully',
+          loading:'logging in ...',
+          error:({ message }) => `There was an error: ${message} `
+        })
+      ).subscribe(()=>{
         this.router.navigate(['/home']);
       });
     }
     //sign in with facebook 
     SignInFB(){
-      this.authService.facbookSingIN(new FacebookAuthProvider).subscribe(()=>{
+      
+      this.authService.facbookSingIN(new FacebookAuthProvider).pipe(
+        this.toast.observe({
+          success:'Logged in successfully',
+          loading:'logging in ...',
+          error:({ message }) => `There was an error: ${message} `
+        })
+      ).subscribe(()=>{
         this.router.navigate(['/home']);
-      })
+      });
     }
-
+    
+          
+    
+    
 }

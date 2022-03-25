@@ -14,16 +14,17 @@
             </mat-form-field>
 
             <button class="centre" mat-raised-button color="primary" type="submit">Login</button>
-            <span class="centre">new User ?<a routerLink="/Sign-up">Sign-Up</a></span>
+            <span class="centre">new User ?<a routerLink="/Sign-up" style="font-size: large; ">Sign-Up</a></span>
 
         </form>
-        <a class="btnG" (click)="SignInGoogle()">
+        <button class="btnG" (click)="SignInGoogle()">
             <div class="card1">
                 <img src="../../../assets/download.png" alt="">
             </div>
-        </a>
+        </button><br>
+        
 
-        <button (click)="SignInFB()"> log in with Facebook</button>
+        <button   class="btnFB" (click)="SignInFB()"> <img src="../../../assets/124010.png" >Log in with Facebook</button>
 
     </div>
 
