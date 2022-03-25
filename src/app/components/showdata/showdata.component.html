@@ -17,13 +17,16 @@
                     <td>{{items.email}}</td>
                     <td>{{items.mobile}}</td>
                     <td>{{items.city}}</td>
-                    <button class="btn" [routerLink]="['/update',items.id]"><mat-icon>edit</mat-icon></button>
-                    
-                    <button class="btn2" mat-fab color="primary" (click)="DeleteData(items.id)" aria-label="Example icon button with a delete icon">
+                    <button class="btn" [routerLink]="['/update',items.id]">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+
+                    <button class="btn2" mat-fab color="primary" (click)="DeleteData(items.id)"
+                        aria-label="Example icon button with a delete icon">
                         <mat-icon>delete</mat-icon>
-                      </button>
-    
-                      <!-- [routerLink]="['/update',items.id](click)="Update(items.id)"  -->
+                    </button>
+
+                    <!-- [routerLink]="['/update',items.id](click)="Update(items.id)"  -->
 
 
                 </tr>

@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from 'src/app/services/authentication.service';
 // import { dataObj } from 'src/app/data';
 import { Router } from '@angular/router';
 import { CrudService } from 'src/app/services/crud.service';
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
-import { identifierName } from '@angular/compiler';
-import { doc } from 'firebase/firestore';
+
 
 @Component({
   selector: 'app-home',
@@ -42,7 +39,9 @@ export class HomeComponent implements OnInit {
     this.showData.mobile=undefined;
     this.showData.city="";
     console.log(res)
-    this.msg="data Added"
+    this.msg=('data added')
+    //this.router.navigate(['/show'])
+    alert("Data added")
   }).catch(err=>{
     console.log(err);
   })

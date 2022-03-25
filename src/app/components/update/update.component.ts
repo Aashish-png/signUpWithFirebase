@@ -10,6 +10,7 @@ import { CrudService } from 'src/app/services/crud.service';
 export class UpdateComponent implements OnInit {
   showData:any=[]
   curruntUser:any=[]
+  empty:any=[]
   msg:string
   id:string
   constructor(private route:ActivatedRoute, private router:Router,public curdservice:CrudService) { 
@@ -27,6 +28,7 @@ export class UpdateComponent implements OnInit {
 
       this.curdservice.edit(this.id).then((res)=>{
         this.showData=res
+        res=this.empty
       })
        
   }

@@ -39,7 +39,7 @@ import { UpdateComponent } from './components/update/update.component';
     SignUpComponent,
     HomeComponent,
     ShowdataComponent,
-    UpdateComponent
+    UpdateComponent,
   ],
   imports: [
     BrowserModule,

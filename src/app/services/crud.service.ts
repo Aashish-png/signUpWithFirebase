@@ -1,20 +1,25 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Firestore, getDoc, getDocs } from '@angular/fire/firestore';
 import { collection, addDoc, doc, deleteDoc, updateDoc } from '@angular/fire/firestore';
+import { rejects } from 'assert';
 
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class CrudService {
+export class CrudService implements OnInit {
   public data: any = []
 
   arry: any = [];
+  empty: any = [];
+
 
   constructor(public fireservice: Firestore,) { }
   //add data to database 
+  ngOnInit(): void {
 
+  }
   create_newStudent(record) {
     return new Promise((resolve, reject) => {
       addDoc(collection(this.fireservice, "students"), record).then((result) => {
@@ -50,7 +55,6 @@ export class CrudService {
       })
       console.log(this.arry)
       resolve(this.arry)
-
     })
 
   }
@@ -81,6 +85,7 @@ export class CrudService {
 
 
     })
+
 
 
 
