@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { CrudService } from 'src/app/services/crud.service';
 import { resolve } from 'dns';
 import { Router } from '@angular/router';
+import { ifError } from 'assert';
 
 
 @Component({
@@ -46,11 +47,13 @@ export class ShowdataComponent implements OnInit {
 
   ///delete data function 
   DeleteData(doc_id: any) {
+    let isExecuted = confirm("Are you sure ?");
     debugger
+    if(isExecuted==true){
     this.crudservice.deleteData(doc_id)
     console.log(this.showData.findIndex((a:any)=>a.id==doc_id))
     this.showData.splice(this.showData.findIndex((a:any)=>a.id==doc_id),1);
-    
+    }
     // this.crudservice.getData()
     // .then((result:any)=>{
     //   this.showData=this.empty

@@ -12,13 +12,13 @@ export class CrudService implements OnInit {
   public data: any = []
 
   arry: any = [];
-  
-  empty:any=[]
-   
+
+  //empty: any = []
+
 
 
   constructor(public fireservice: Firestore,) { }
-  
+
   ngOnInit(): void {
 
   }
@@ -43,29 +43,27 @@ export class CrudService implements OnInit {
 
   getData() {
     debugger
-    let nw:any=[]
+    let nw: any = []
     return new Promise(async (resolve, rejects) => {
       const querySnapshot = await getDocs(collection(this.fireservice, "students"))
-        
-      querySnapshot.forEach((doc) => {
-        //this.arry==this.empty
 
+      querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
         let data = doc.data()
         data['id'] = doc.id
         nw.push(data)
-      
+
         debugger
         console.log(doc.id, " ==> ", doc.data());
-         
+
       })
-         
-              
-      console.log(this.arry)
+
+
+      console.log(nw)
       resolve(nw)
 
-       
-    
+
+
     })
 
   }
@@ -85,23 +83,21 @@ export class CrudService implements OnInit {
       })
 
   }
-  ////edit the data using ngoninit  *************
+  ////edit the data when clicked  using ngoninit  *************
   edit(id: string) {
     return new Promise(async (resolve, rejects) => {
 
       const querySnapshot = await getDocs(collection(this.fireservice, "students"))
-        
-      querySnapshot.forEach((doc) => {
-        //this.arry==this.empty
 
+      querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
         let data = doc.data()
         data['id'] = doc.id
         this.arry.push(data)
-      
+
         debugger
-        
-         
+
+
       })
 
 

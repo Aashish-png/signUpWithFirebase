@@ -2,7 +2,7 @@
   <mat-toolbar color="primary">
     Sign-Up with Fire base
     <ul>
-      <li><button class="btn3" mat-raised-button color="warn" routerLink="home">Home</button></li>
+      <li ><button class="btn3" mat-raised-button color="warn" routerLink="home">Home</button></li>
     <li><button class="btn3"  mat-raised-button color="warn" routerLink="show">View Data</button></li>
   </ul>
     <ng-container *ngIf="authService.currentUser$ |async as user; else loginButton">

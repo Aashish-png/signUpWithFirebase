@@ -39,8 +39,8 @@ export class HomeComponent implements OnInit {
     this.showData.mobile=undefined;
     this.showData.city="";
     console.log(res)
-    this.msg=('data added')
-    //this.router.navigate(['/show'])
+    //this.msg=('data added')
+    this.router.navigate(['/show'])
     alert("Data added")
   }).catch(err=>{
     console.log(err);
