@@ -21,8 +21,8 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
-  saveData(){
+//***********************save data********************** */
+  saveData(){   
   let record={};
   debugger
   

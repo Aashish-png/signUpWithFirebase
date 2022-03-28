@@ -12,14 +12,17 @@ export class CrudService implements OnInit {
   public data: any = []
 
   arry: any = [];
-  empty: any = [];
+  
+  empty:any=[]
+   
 
 
   constructor(public fireservice: Firestore,) { }
-  //add data to database 
+  
   ngOnInit(): void {
 
   }
+  //add data to database 
   create_newStudent(record) {
     return new Promise((resolve, reject) => {
       addDoc(collection(this.fireservice, "students"), record).then((result) => {
@@ -40,21 +43,29 @@ export class CrudService implements OnInit {
 
   getData() {
     debugger
+    let nw:any=[]
     return new Promise(async (resolve, rejects) => {
       const querySnapshot = await getDocs(collection(this.fireservice, "students"))
-
+        
       querySnapshot.forEach((doc) => {
+        //this.arry==this.empty
+
         // doc.data() is never undefined for query doc snapshots
         let data = doc.data()
         data['id'] = doc.id
-        this.arry.push(data)
-
+        nw.push(data)
+      
         debugger
         console.log(doc.id, " ==> ", doc.data());
-
+         
       })
+         
+              
       console.log(this.arry)
-      resolve(this.arry)
+      resolve(nw)
+
+       
+    
     })
 
   }
@@ -76,7 +87,22 @@ export class CrudService implements OnInit {
   }
   ////edit the data using ngoninit  *************
   edit(id: string) {
-    return new Promise((resolve, rejects) => {
+    return new Promise(async (resolve, rejects) => {
+
+      const querySnapshot = await getDocs(collection(this.fireservice, "students"))
+        
+      querySnapshot.forEach((doc) => {
+        //this.arry==this.empty
+
+        // doc.data() is never undefined for query doc snapshots
+        let data = doc.data()
+        data['id'] = doc.id
+        this.arry.push(data)
+      
+        debugger
+        
+         
+      })
 
 
       const curData = this.arry.find((m: any) => m.id == id)
@@ -90,7 +116,7 @@ export class CrudService implements OnInit {
 
 
   }
-  //when we click update button
+  //to update the records 
   Update(record: any) {
     return new Promise(async (resolve, rejects) => {
       const dataToUpdate = doc(this.fireservice, 'students', record.id)

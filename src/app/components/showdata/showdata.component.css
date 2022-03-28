@@ -30,6 +30,8 @@ body.mat-typography {
     border-radius: 10px;
     display: flex;
     display: inline;
+    position: relative;
+    top: 4px;
 }
 
 header ul{

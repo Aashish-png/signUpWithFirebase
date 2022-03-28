@@ -23,13 +23,14 @@ export class UpdateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+   
       this.id=this.showData.id
 
       this.curdservice.edit(this.id).then((res)=>{
         this.showData=res
-        res=this.empty
+       
       })
+     
        
   }
 
