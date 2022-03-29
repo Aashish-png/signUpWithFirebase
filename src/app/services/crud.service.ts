@@ -1,7 +1,18 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Firestore, getDoc, getDocs } from '@angular/fire/firestore';
 import { collection, addDoc, doc, deleteDoc, updateDoc } from '@angular/fire/firestore';
-import { rejects } from 'assert';
+
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  Storage,
+  uploadBytes,
+  uploadBytesResumable,
+} from '@angular/fire/storage';
+import { finalize, from, map, Observable, switchMap } from 'rxjs';
+
+
 
 
 
@@ -17,7 +28,7 @@ export class CrudService implements OnInit {
 
 
 
-  constructor(public fireservice: Firestore,) { }
+  constructor(public fireservice: Firestore, public storage: Storage) { }
 
   ngOnInit(): void {
 
@@ -123,6 +134,7 @@ export class CrudService implements OnInit {
           resolve(result)
 
         }).catch((err) => {
+          rejects(err)
           console.log(err)
         })
     })
@@ -132,7 +144,12 @@ export class CrudService implements OnInit {
 
 
 
+  ////for image upload 
 
+
+  upload() {
+
+  }
 
 
 }

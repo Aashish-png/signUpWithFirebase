@@ -4,6 +4,7 @@
             <thead>
                 <tr>
                     <th>SNO</th>
+                    <th>profile</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Mobile</th>
@@ -13,7 +14,12 @@
             <tbody>
                 <tr *ngFor="let items of showData; let i=index">
                     <td>{{i+1}}</td>
-                    <td>{{items.name}}</td>
+                 <!-- <img [src]="items.url" alt="profile"> -->
+                    <td>
+                      <div class="div1">  <img [src]="items.url" alt="profile" sizes="20px" srcset=""></div>
+                    </td>
+                
+                   <td> {{items.name}}</td>
                     <td>{{items.email}}</td>
                     <td>{{items.mobile}}</td>
                     <td>{{items.city}}</td>

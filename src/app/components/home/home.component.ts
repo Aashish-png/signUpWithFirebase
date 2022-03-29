@@ -2,6 +2,16 @@ import { Component, OnInit } from '@angular/core';
 // import { dataObj } from 'src/app/data';
 import { Router } from '@angular/router';
 import { CrudService } from 'src/app/services/crud.service';
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  Storage,
+  uploadBytes,
+  uploadBytesResumable,
+} from '@angular/fire/storage';
+import { HotToastService } from '@ngneat/hot-toast';
+
 
 
 @Component({
@@ -14,7 +24,10 @@ export class HomeComponent implements OnInit {
   msg:string
   // showData:dataObj;
    showData:any=[]
-  constructor(private router:Router,public crudSer:CrudService) {
+  filePath: string;
+  file: any={}
+  constructor(private router:Router,public crudSer:CrudService,public store:Storage,
+    public toast:HotToastService) {
     
    }
 
@@ -30,6 +43,7 @@ export class HomeComponent implements OnInit {
   record['email']=this.showData.email;
   record['mobile']=this.showData.mobile;
   record['city']=this.showData.city;
+  record['url']=this.showData.url;
   
   
   this.crudSer.create_newStudent(record).then(res=>{
@@ -48,7 +62,55 @@ export class HomeComponent implements OnInit {
 
   }
   
- 
+  chooseFile(event:any){
+    this.file= event.target.files[0]
+    console.log(this.file)
+  }
 
-  
+  upload(){
+
+    debugger
+    const storage = getStorage();
+    const storageRef = ref(storage, this.file.name);
+   // 
+    const uploadTask = uploadBytesResumable(storageRef, this.file);
+    
+    // Register three observers:
+    // 1. 'state_changed' observer, called any time the state changes
+    // 2. Error observer, called on failure
+    // 3. Completion observer, called on successful completion
+    uploadTask.on('state_changed', 
+      (snapshot) => {
+        // Observe state change events such as progress, pause, and resume
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+        switch (snapshot.state) {
+          case 'paused':
+            console.log('Upload is paused');
+            break;
+          case 'running':
+            console.log('Upload is running');
+            break;
+        }
+      }, 
+      (error) => {
+        console.log(error)
+        // Handle unsuccessful uploads
+      }, 
+      () => {
+        // Handle successful uploads on complete
+        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log('File available at', downloadURL);
+
+           this.showData.url=downloadURL
+        });
+      }
+    );
+  }
+
+
+ 
+    
   }

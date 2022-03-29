@@ -12,6 +12,9 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 
 
+
+
+
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -55,9 +58,13 @@ import { UpdateComponent } from './components/update/update.component';
     AppRoutingModule,
     CommonModule,
     FormsModule,
+    AngularFireModule,
+    
+    
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage()),
     HotToastModule.forRoot()
    
   ],

@@ -2,28 +2,35 @@
 
 <section>
     <!-- form to register new data -->
-        <div>
-            <form required #basic="ngForm"  class="container" >
-                
-                <label for="name">Name</label><br>
-                <input type="text" required #name="ngModel" [(ngModel)]="showData.name" for="name" name="name">
-                <div class="div1" *ngIf=" name.invalid && name.touched ">Please Enter Vaild Name</div>
-                <br>
-    
-                <label for="Email">Email</label><br>
-                <input type="email"required #email="ngModel" email="" [(ngModel)]="showData.email" for="email" name="email" >
-                <div class="div1" *ngIf=" email.invalid && name.touched ">Please Enter Vaild Email</div>
-                <br>
-    
-                <label for="Number">Mobile Number</label><br>
-                <input type="number" required #number="ngModel"  [(ngModel)]="showData.mobile" for="number" name="number"><br>
-                <div class="div1" *ngIf=" number.invalid && number.touched ">Please Enter Phone Number</div>
-                <label for="City">City</label><br>
-                <input type="text" [(ngModel)]="showData.city" for="city " name="city"><br>
-    
-                <button  [disabled]="basic.invalid" (click)="saveData()" mat-raised-button color="primary">Submit</button>
-                    <div class="div1" style="color: rgba(128, 255, 0, 0.678);">{{msg}}</div>
-                 
-            </form>
-        </div>
-    </section>
+    <div>
+        <form required #basic="ngForm" class="container">
+
+            <label for="name">Name</label><br>
+            <input type="text" required #name="ngModel" [(ngModel)]="showData.name" for="name" name="name">
+            <div class="div1" *ngIf=" name.invalid && name.touched ">Please Enter Vaild Name</div>
+            <br>
+
+            <label for="Email">Email</label><br>
+            <input type="email" required #email="ngModel" email="" [(ngModel)]="showData.email" for="email"
+                name="email">
+            <div class="div1" *ngIf=" email.invalid && name.touched ">Please Enter Vaild Email</div>
+            <br>
+
+            <label for="Number">Mobile Number</label><br>
+            <input type="number" required #number="ngModel" [(ngModel)]="showData.mobile" for="number"
+                name="number"><br>
+            <div class="div1" *ngIf=" number.invalid && number.touched ">Please Enter Phone Number</div>
+            <label for="City">City</label><br>
+            <input type="text" [(ngModel)]="showData.city" for="city " name="city"><br>
+
+            <label for="image">upload an image</label>
+            <input type="file" (change)="chooseFile($event)" [(ngModel)]="showData.url" for="image" name image>
+            <button (click)="upload()">   upload </button>
+
+
+            <button [disabled]="basic.invalid" (click)="saveData()" mat-raised-button color="primary">Submit</button>
+            <div class="div1" style="color: rgba(128, 255, 0, 0.678);">{{msg}}</div>
+
+        </form>
+    </div>
+</section>
