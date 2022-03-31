@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { CrudService } from 'src/app/services/crud.service';
 import { resolve } from 'dns';
 import { Router } from '@angular/router';
+import { HotToastService } from '@ngneat/hot-toast';
 
 
 
@@ -17,7 +18,8 @@ export class ShowdataComponent implements OnInit {
   dataSource: any
   showData: any = []
   empty: any = []
-  
+  i:any
+  j:any
   //set:any=new Set()
   constructor(public crudservice: CrudService, private router: Router) {
   
@@ -27,11 +29,12 @@ export class ShowdataComponent implements OnInit {
 
   ngOnInit(): void {
     
-    this.showData = this.empty
-    this.crudservice.getData().then((result: any) => {
-      this.showData = result
-
+  
+  this.j =1
       
+    this.crudservice.getData(this.j).then((result: any) => {
+      this.showData = result
+  
       
       console.log(result)
     }).catch((err) => {
@@ -41,45 +44,75 @@ export class ShowdataComponent implements OnInit {
     })
     console.log('call')
     debugger
-    
+   
+  
+      
   }
+
+ 
 
 
   ///delete data function 
   DeleteData(doc_id: any) {
     let isExecuted = confirm("Are you sure ?");
-    debugger
+    
     if(isExecuted==true){
     this.crudservice.deleteData(doc_id)
     console.log(this.showData.findIndex((a:any)=>a.id==doc_id))
     this.showData.splice(this.showData.findIndex((a:any)=>a.id==doc_id),1);
     }
-    // this.crudservice.getData()
-    // .then((result:any)=>{
-    //   this.showData=this.empty
-    //   this.showData=result
-    //   console.log(result)
-    //  }).catch((err) => {
-
-    //    console.log(err)
-
-    //  })
-
-
+    
   }
 
 
-  // **************************************
+///***************************Next************************ 
+next(){
+   debugger
+
+   let g=this.showData[this.showData.length-1]
+
+  this.crudservice.getData(g.timeS)  
+  .then((result: any) => {
+    if (result.length==0){
+      this.i="End of the table"
+    }
+    this.showData = result
+  this.j=undefined
+    console.log(result)
+  }).catch((err) => {
+
+    console.log(err)
+
+  })
+  console.log('callNext')
+  debugger
+ 
+}
+
+// ***********prev*****************
+
+prev(){
+  let g=0
+
+  this.crudservice.getData(g)  
+  .then((result: any) => {
+   this.i=""
+    this.showData = result
+  
+    console.log(result)
+  }).catch((err) => {
+
+    console.log(err)
+
+  })
+  console.log('callNext')
+  debugger
+}
 
 
 
 
 
-  // Update(id:string){
-  //   this.router.navigate(['/home']);
-
-
-  // }
 
 
 }

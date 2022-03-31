@@ -22,10 +22,11 @@
             <div class="div1" *ngIf=" number.invalid && number.touched ">Please Enter Phone Number</div>
             <label for="City">City</label><br>
             <input type="text" [(ngModel)]="showData.city" for="city " name="city"><br>
-
-            <label for="image">upload an image</label>
-            <input type="file" (change)="chooseFile($event)" [(ngModel)]="showData.url" for="image" name image>
-            <button (click)="upload()">   upload </button>
+            <div class="div2">
+                <label for="image">Upload Image</label>
+                <input type="file"(change)="chooseFile($event)" [(ngModel)]="showData.url" for="image" name image>
+                <button  class="btnU" color="primary" (click)="upload()"> upload </button>
+            </div>
 
 
             <button [disabled]="basic.invalid" (click)="saveData()" mat-raised-button color="primary">Submit</button>

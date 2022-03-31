@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import {
+  Router, NavigationStart, NavigationEnd,
+  NavigationCancel, NavigationError, Event
+} from '@angular/router';
+
 import { AuthenticationService } from './services/authentication.service';
 
 @Component({
@@ -8,13 +12,38 @@ import { AuthenticationService } from './services/authentication.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  showLoadingIndicator: boolean;
 
-  constructor(public authService: AuthenticationService, private router: Router) { }
+  constructor(public authService: AuthenticationService, private router: Router) { 
 
-  logout() {
-    this.authService.logout().subscribe(() => {
-        this.router.navigate(['']);
-    })
-  }
+  
+
+  this.router.events.subscribe((routerEvent: Event) => {
+
+    
+    if (routerEvent instanceof NavigationStart) {
+      this.showLoadingIndicator = true;
+    }
+
+    
+    
+    if (routerEvent instanceof NavigationEnd ||
+      routerEvent instanceof NavigationError ||
+      routerEvent instanceof NavigationCancel) {
+      this.showLoadingIndicator = false;
+    }
+
+  });
+
   
 }
+
+logout() {
+  this.authService.logout().subscribe(() => {
+      this.router.navigate(['']);
+  })
+}
+
+  
+}
+

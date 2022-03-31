@@ -21,7 +21,7 @@ import { HotToastService } from '@ngneat/hot-toast';
 })
 export class HomeComponent implements OnInit {
 
-  msg:string
+  msg:any
   // showData:dataObj;
    showData:any=[]
   filePath: string;
@@ -37,6 +37,7 @@ export class HomeComponent implements OnInit {
 //***********************save data********************** */
   saveData(){   
   let record={};
+  this.showData.time=Date.now()
   debugger
   
   record['name']=this.showData.name;
@@ -44,6 +45,7 @@ export class HomeComponent implements OnInit {
   record['mobile']=this.showData.mobile;
   record['city']=this.showData.city;
   record['url']=this.showData.url;
+record['timeS']=this.showData.time
   
   
   this.crudSer.create_newStudent(record).then(res=>{
@@ -58,6 +60,7 @@ export class HomeComponent implements OnInit {
     alert("Data added")
   }).catch(err=>{
     console.log(err);
+    this.msg=err
   })
 
   }
@@ -71,7 +74,7 @@ export class HomeComponent implements OnInit {
 
     debugger
     const storage = getStorage();
-    const storageRef = ref(storage, this.file.name);
+    const storageRef = ref(storage,  this.file.name);
    // 
     const uploadTask = uploadBytesResumable(storageRef, this.file);
     
@@ -84,7 +87,9 @@ export class HomeComponent implements OnInit {
         // Observe state change events such as progress, pause, and resume
         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        this.msg=progress+'% done'
         console.log('Upload is ' + progress + '% done');
+        
         switch (snapshot.state) {
           case 'paused':
             console.log('Upload is paused');
@@ -96,6 +101,7 @@ export class HomeComponent implements OnInit {
       }, 
       (error) => {
         console.log(error)
+        this.msg=error
         // Handle unsuccessful uploads
       }, 
       () => {

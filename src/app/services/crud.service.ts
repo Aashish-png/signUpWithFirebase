@@ -1,7 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
-import { Firestore, getDoc, getDocs } from '@angular/fire/firestore';
-import { collection, addDoc, doc, deleteDoc, updateDoc } from '@angular/fire/firestore';
-
+import { endAt, Firestore, getDoc, getDocs } from '@angular/fire/firestore';
+import { collection, addDoc, doc, deleteDoc, updateDoc,startAfter } from '@angular/fire/firestore';
+import { query, orderBy, limit, startAt } from "firebase/firestore";
 import {
   getDownloadURL,
   getStorage,
@@ -11,6 +11,7 @@ import {
   uploadBytesResumable,
 } from '@angular/fire/storage';
 import { finalize, from, map, Observable, switchMap } from 'rxjs';
+import { timeStamp } from 'console';
 
 
 
@@ -23,6 +24,7 @@ export class CrudService implements OnInit {
   public data: any = []
 
   arry: any = [];
+  lastRes:any=[];
 
   //empty: any = []
 
@@ -36,7 +38,7 @@ export class CrudService implements OnInit {
   //add data to database 
   create_newStudent(record) {
     return new Promise((resolve, reject) => {
-      addDoc(collection(this.fireservice, "students"), record).then((result) => {
+      addDoc (collection (this.fireservice, "students"), record).then((result) => {
 
         resolve(result)
 
@@ -52,12 +54,26 @@ export class CrudService implements OnInit {
 
   //Read data from database
 
-  getData() {
+  getData(i:any) {
     debugger
-    let nw: any = []
-    return new Promise(async (resolve, rejects) => {
-      const querySnapshot = await getDocs(collection(this.fireservice, "students"))
+      
+       let nw: any = []
 
+    return new Promise(async (resolve, rejects) => {
+      const ref=collection (this.fireservice, "students")
+      if(i==1){
+            var db=query(ref, orderBy("timeS"),   limit(5));
+      }
+      else{
+        var db=query(ref, orderBy("timeS"),startAfter(i), limit(5), ) ;
+      }
+      if(i==0){
+        var db=query(ref, orderBy("timeS"),startAt(i), limit(5), ) ;
+      }
+      
+      const querySnapshot = await getDocs(db)
+      
+      
       querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
         let data = doc.data()
@@ -66,10 +82,10 @@ export class CrudService implements OnInit {
 
         debugger
         console.log(doc.id, " ==> ", doc.data());
-
+        
       })
 
-
+    
       console.log(nw)
       resolve(nw)
 
@@ -144,11 +160,39 @@ export class CrudService implements OnInit {
 
 
 
-  ////for image upload 
+  
 
 
-  upload() {
+  prev(timeS:number) {
+    
+    let nw: any = []
 
+    return new Promise(async (resolve, rejects) => {
+      const ref=collection (this.fireservice, "students")
+              
+      const db=query(ref, orderBy("timeS" ,'desc'),endAt(timeS), limit(5), ) ;
+      const querySnapshot = await getDocs(db)
+      
+      debugger
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        let data = doc.data()
+        data['id'] = doc.id
+        nw.push(data)
+
+        debugger
+        console.log(doc.id, " ==> ", doc.data());
+
+      })
+
+
+      console.log(nw)
+      resolve(nw)
+
+
+
+    })
+  
   }
 
 

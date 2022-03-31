@@ -41,6 +41,20 @@ input {
 label{
     font-size: large;
 }
-button{
-    cursor: pointer;
-    }
+.div2 {
+    display: inline-grid;
+    background: #be000075;
+    font-family: emoji;
+    text-align: center;
+    padding: 20px;
+    margin: 5px;
+    border-radius: 10px;
+    position: relative;
+    right: 20px;
+
+}
+.btnU {
+    padding: 10px;
+    background-color: #f1ff40f5;
+    border-radius: 20px;
+}

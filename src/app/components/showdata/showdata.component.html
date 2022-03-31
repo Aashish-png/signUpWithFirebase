@@ -1,5 +1,6 @@
 <section class="back">
     <div class="container">
+        <!-- <div  id="loader"></div> -->
         <table>
             <thead>
                 <tr>
@@ -34,10 +35,13 @@
 
                     <!-- [routerLink]="['/update',items.id](click)="Update(items.id)"  -->
 
-
+                   
                 </tr>
             </tbody>
         </table>
-
+          <span id="end"> {{i}}</span>
+         
+        <button class="btnN" [disabled]='showData.length<=4' (click)="next()"><mat-icon>skip_next</mat-icon></button>
+        <button class="btnN" [disabled]="j==1"  (click)="prev()" ><mat-icon>skip_previous</mat-icon></button>
     </div>
 </section>
