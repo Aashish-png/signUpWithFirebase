@@ -45,4 +45,25 @@ label.label {
     font-size: x-large;
     font-family: fantasy;
 }
+button.Export {
+    display: inline;
+    position: relative;
+    left: 52%;
+    bottom: 250px;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
+    border-color: cyan;
+    background: chartreuse;
+    font-size: large;
+    font-family: ui-monospace;
+}
+div#copy1 {
+    margin: 10px;
+    padding: 20px;
+    border-color: #c28f1d;
+    font-size: initial;
+    font-family: fangsong;
+    background: bisque;
+}
 
