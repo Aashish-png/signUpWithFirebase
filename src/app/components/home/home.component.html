@@ -25,7 +25,7 @@
             <div class="div2">
                 <label for="image">Upload Image</label>
                 <input type="file"(change)="chooseFile($event)" [(ngModel)]="showData.url" for="image" name image>
-                <button  class="btnU" color="primary" (click)="upload()"> upload </button>
+                <button [disabled]="f==1" class="btnU" color="primary" (click)="upload()"> upload </button>
             </div>
 
 

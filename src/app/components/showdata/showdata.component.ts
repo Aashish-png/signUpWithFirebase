@@ -105,7 +105,7 @@ prev(){
     console.log(err)
 
   })
-  console.log('callNext')
+  console.log('callprev')
   debugger
 }
 

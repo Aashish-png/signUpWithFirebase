@@ -26,12 +26,14 @@ export class HomeComponent implements OnInit {
    showData:any=[]
   filePath: string;
   file: any={}
+  f:any
   constructor(private router:Router,public crudSer:CrudService,public store:Storage,
     public toast:HotToastService) {
     
    }
 
   ngOnInit(): void {
+    this.f=1
   }
 
 //***********************save data********************** */
@@ -68,6 +70,7 @@ record['timeS']=this.showData.time
   chooseFile(event:any){
     this.file= event.target.files[0]
     console.log(this.file)
+    this.f=undefined
   }
 
   upload(){

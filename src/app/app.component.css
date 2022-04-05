@@ -22,3 +22,27 @@ button.mat-focus-indicator.btn3.mat-raised-button.mat-button-base.mat-warn {
 }
 
 
+#frm{
+    border-radius: 10px;
+    border-color: black;
+    /* //background-image: url('/src/assets/spring.jpeg'); */
+    margin-top: 10px;
+}
+button.go {
+    margin-left: 5px;
+    padding: 10px;
+    border-radius: 10px;
+    border-color: darkcyan;
+    background: #6ce81a;
+}
+.inCopy{
+    padding: 9px;
+    border-radius: 10px;
+    border-color: blue;
+}
+label.label {
+    margin-left: 12%;
+    font-size: x-large;
+    font-family: fantasy;
+}
+

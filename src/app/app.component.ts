@@ -4,6 +4,7 @@ import {
   NavigationCancel, NavigationError, Event
 } from '@angular/router';
 
+
 import { AuthenticationService } from './services/authentication.service';
 
 @Component({
@@ -12,38 +13,51 @@ import { AuthenticationService } from './services/authentication.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  showLoadingIndicator: boolean;
-
-  constructor(public authService: AuthenticationService, private router: Router) { 
-
   
-
-  this.router.events.subscribe((routerEvent: Event) => {
-
-    
-    if (routerEvent instanceof NavigationStart) {
-      this.showLoadingIndicator = true;
-    }
-
-    
-    
-    if (routerEvent instanceof NavigationEnd ||
-      routerEvent instanceof NavigationError ||
-      routerEvent instanceof NavigationCancel) {
-      this.showLoadingIndicator = false;
-    }
-
-  });
-
+find:any={}
   
-}
+  constructor(public authService: AuthenticationService, private router: Router,) {  }
+Find:any
+
+
+
 
 logout() {
   this.authService.logout().subscribe(() => {
       this.router.navigate(['']);
   })
 }
+search(){
+  debugger
+  
+this.Find=this.find.url
+console.log(this.Find)
 
+let doc:any=document.getElementById('frm')
+doc.src=this.Find
+}
+
+// ****************************
+copy(){
+  debugger
+  // let ifrm=document.getElementById('frm')
+  
+  //   copyText(ifrm)
+  navigator.clipboard.readText().then(
+    clipText => document.getElementById("copy1").innerText = clipText);
   
 }
+
+
+}
+// function copyText(HTMLElement){
+
+//   let elementText=HTMLElement.innerText
+//   let inputElement=document.createElement('input')
+//   inputElement.setAttribute('value',elementText);
+//   document.body.appendChild(inputElement)
+
+//   document.execCommand('copy');
+
+// }
 

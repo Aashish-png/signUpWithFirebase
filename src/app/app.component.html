@@ -29,5 +29,15 @@
         
       </button>
     </mat-menu>
+    <form required #basic="ngForm" class="search1">
+     <label class="label" for="search"> Search Here </label>
+    <input type="url" class="inCopy" [(ngModel)]="find.url" name="search" >
+    <button class="go" (click)="search()"  >GO</button>
+  </form>
+  <div  >
+  <iframe id="frm"  width="50%" height="400">
     
-  
+  </iframe>
+  <div id="copy1"></div>
+  <button  (click)="copy()">Export</button>
+    </div>
