@@ -1,7 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { endAt, Firestore, getDoc, getDocs } from '@angular/fire/firestore';
 import { collection, addDoc, doc, deleteDoc, updateDoc,startAfter } from '@angular/fire/firestore';
-import { query, orderBy, limit, startAt } from "firebase/firestore";
+import { query, orderBy, limit, startAt, setDoc } from "firebase/firestore";
 import {
   getDownloadURL,
   getStorage,
@@ -12,6 +12,8 @@ import {
 } from '@angular/fire/storage';
 import { finalize, from, map, Observable, switchMap } from 'rxjs';
 import { timeStamp } from 'console';
+import { resolve } from 'dns';
+import { rejects } from 'assert';
 
 
 
@@ -39,7 +41,7 @@ export class CrudService implements OnInit {
   create_newStudent(record) {
     return new Promise((resolve, reject) => {
       addDoc (collection (this.fireservice, "students"), record).then((result) => {
-
+          
         resolve(result)
 
       }).catch((err) => {
@@ -196,4 +198,45 @@ export class CrudService implements OnInit {
   }
 
 
+  ///--------------------------------------
+
+  
+
+  async addData(data:any){
+  debugger
+    return new Promise(async (resolve, rejects) => {
+
+
+const newCityRef = doc(collection(this.fireservice, "contentAccountMapping","quiz","question"));
+
+await setDoc(newCityRef, data);
+
+resolve(setDoc)
+
+})
+
+
 }
+}
+
+
+
+
+
+//------garbase code in case 
+
+
+//       let questionId=Date.now()
+// const Ref = doc(this.fireservice, "contentAccountMapping","v4xP5UVYzf8Gf78j0ODd","quiz","v4xP5UVYzf8Gf78j0ODd", "questions")
+
+// // Add a new document with a generated id.
+// const docRef = setDoc(Ref, data,
+// )
+// resolve(docRef)
+
+
+// return new Promise(async (resolve, rejects) => {
+// const docRef = await addDoc(collection(this.fireservice, "contentAccountMapping","quiz","questions"),data,);
+// console.log("Document written with ID: ", docRef.id);
+// resolve(docRef)
+//   })
