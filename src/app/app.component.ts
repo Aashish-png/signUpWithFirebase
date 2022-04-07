@@ -15,139 +15,180 @@ import { CrudService } from './services/crud.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  
-find:any={}
-copyT:string
+
+  find: any = {}
+  copyT: string
   title: any;
-  Narr:any
-  ques1:any
+  Narr: any
+  ques1: any
   constructor(public authService: AuthenticationService, private router: Router,
-    public crudSer:CrudService )
-   {  }
-Find:any
+    public crudSer: CrudService) { }
+  Find: any
 
 
 
-
-logout() {
-  this.authService.logout().subscribe(() => {
+  //for logout 
+  logout() {
+    this.authService.logout().subscribe(() => {
       this.router.navigate(['']);
-  })
-}
-search(){
-  debugger
-  
-this.Find=this.find.url
-console.log(this.Find)
+    })
+  }
+  // when we click go button this fucntion runs
+  search() {
+    debugger
 
-let doc:any=document.getElementById('frm')
-doc.src=this.Find
-}
+    this.Find = this.find.url
+    console.log(this.Find)
 
-// ****************************
-copy(){
-  debugger
+    let doc: any = document.getElementById('frm')
+    doc.src = this.Find
+  }
 
-  navigator.clipboard.readText().then(
-    clipText => document.getElementById("copy1").innerText = clipText)
-    
-    
-}
-   first(){
-  let val=document.getElementById("copy1").innerText
-      this.copyT=val
-      console.log(this.copyT)
-      
-      var arr=this.copyT.split("\n\n");
-      console.log(arr)
+  // ****************************Export buttom***********************
+  copy() {
+    debugger
+
+    navigator.clipboard.readText().then(
+      clipText => document.getElementById("copy1").innerText = clipText)
 
 
-       this.ques1=arr[0]
-      var option=arr[1]
-      
-      this.Narr=option.split("\n")
+  }
+  //------------------Get Ans-----------------------------
+  first() {
+    let val = document.getElementById("copy1").innerText
+    this.copyT = val
+    console.log(this.copyT)
+    //split the div content
+    var arr = this.copyT.split("\n\n");
+    console.log(arr)
 
-      console.log(this.Narr)
 
-      for(let i in this.Narr){
-        var x = document.createElement("INPUT");
-        x.setAttribute("type", "checkbox");
-       
-         let k:any=1
-          if (i=="1"){
-            k=2
-          }if(i=="2"){
-            k=3
-          }if(i=="3"){
-            k=4
-          }
-          x.id="checkMate"+k
-        
-        var L= document.createElement('label')
-        L.appendChild(document.createTextNode(k))
+    this.ques1 = arr[0]
+    var option = arr[1]
+//---------------split the options ----------------
+    this.Narr = option.split("\n")
 
-        let h=this.Narr[i]
-         x.appendChild(document.createTextNode(`${h}`))
-        document.getElementById('Div1').append(L,x)
-       
+    console.log(this.Narr)
+////--------------Create checkBox ---------------
+    for (let i in this.Narr) {
+      var x = document.createElement("INPUT");
+      x.setAttribute("type", "checkbox");
+
+      let k: any = 1
+      if (i == "1") {
+        k = 2
+      } if (i == "2") {
+        k = 3
+      } if (i == "3") {
+        k = 4
       }
+      x.id = "checkMate" + k
 
-  
-      
-   }
+      var L = document.createElement('label')
+      L.id = "L1" + k
+      L.appendChild(document.createTextNode(k))
 
-   pushData(){
-     let correct=[]
-     let options1=[]
+      let h = this.Narr[i]
+      x.appendChild(document.createTextNode(`${h}`))
+      document.getElementById('Div1').append(L, x)
 
-     let A=document.querySelector('#checkMate1')as HTMLInputElement
-     let B=document.querySelector('#checkMate2')as HTMLInputElement
-     let C=document.querySelector('#checkMate3')as HTMLInputElement
-     let D=document.querySelector('#checkMate4')as HTMLInputElement
-     console.log(A.checked)
-
-     if (A.checked==true) {
-       A=this.Narr[0]
-        correct.push(A)
-     }if (B.checked==true){
-       B=this.Narr[1]
-       correct.push(B)
-     }if(C.checked==true){
-       C=this.Narr[2]
-       correct.push(C)
-     }if(D.checked==true){
-       D=this.Narr[3]
-       correct.push(D)
-     }
-  if (A.checked==false) {
-      A=this.Narr[0]
-       options1.push(A)
-    }if (B.checked==false){
-      B=this.Narr[1]
-      options1.push(B)
-    }if(C.checked==false){
-      C=this.Narr[2]
-      options1.push(C)
-    }if(D.checked==false){
-      D=this.Narr[3]
-      options1.push(D)
     }
+
+
+
+  }
+//---------Push data to database -------------
+  pushData() {
+    let correct = []
+    let options1 = []
+
+    let A = document.querySelector('#checkMate1') as HTMLInputElement
+    let B = document.querySelector('#checkMate2') as HTMLInputElement
+    let C = document.querySelector('#checkMate3') as HTMLInputElement
+    let D = document.querySelector('#checkMate4') as HTMLInputElement
+    console.log(A.checked)
+
+    if (A.checked == true) {
+      A = this.Narr[0]
+      correct.push(A)
+    } if (B.checked == true) {
+      B = this.Narr[1]
+      correct.push(B)
+    } if (C.checked == true) {
+      C = this.Narr[2]
+      correct.push(C)
+    } if (D.checked == true) {
+      D = this.Narr[3]
+      correct.push(D)
+    }
+    // if (A.checked==false ) {
+    //     A=this.Narr[0]
+    //      options1.push(A)
+    //   }if (B.checked==false){
+    //     B=this.Narr[1]
+    //     options1.push(B)
+    //   }if(C.checked==false){
+    //     C=this.Narr[2]
+    //     options1.push(C)
+    //   }if(D.checked==false){
+    //     D=this.Narr[3]
+    //     options1.push(D)
+    //   }
+    for (let i in this.Narr) {
+      if (i == "0") {
+        A = this.Narr[0]
+        options1.push(A)
+      }
+      if (i == "1") {
+        B = this.Narr[1]
+        options1.push(B)
+      }
+      if (i == "2") {
+        C = this.Narr[2]
+        options1.push(C)
+      }
+      if (i == "3") {
+        D = this.Narr[3]
+        options1.push(D)
+      }
+    }
+
+
     console.log(this.ques1)
     console.log(correct)
     console.log(options1)
-    
-         let data={}
-     data["questionText"]=this.ques1
-     data['correct']=correct
-     data['option']=options1
-  //  -----------------------------------
-  this.crudSer.addData(data).then((result)=>
-  {
-    console.log(result)
-    alert("data added")
-  }).catch((err)=>{
-    console.log(err)
-  })
-   }
+
+    let data = {}
+    data["questionText"] = this.ques1
+    data['correct'] = correct
+    data['option'] = options1
+    //  -----------------------using Services-------------- 
+    this.crudSer.addData(data).then((result) => {
+      console.log(result)
+      alert("data added")
+///-------------destroying the input elements and labels----------------
+      let X = document.getElementById('checkMate1')
+      X.remove();
+      let Y = document.getElementById('checkMate2')
+      Y.remove();
+      let Z = document.getElementById('checkMate3')
+      Z.remove();
+      let W = document.getElementById('checkMate4')
+      W.remove();
+
+      let P = document.getElementById('L11')
+      P.remove()
+      let Q = document.getElementById('L12')
+      Q.remove()
+      let R = document.getElementById('L13')
+      R.remove()
+      let S = document.getElementById('L14')
+      S.remove()
+
+
+    }).catch((err) => {
+      console.log(err)
+    })
+  }
 
 }
