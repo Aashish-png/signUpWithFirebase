@@ -6,6 +6,7 @@ import { CrudService } from 'src/app/services/crud.service';
 import { resolve } from 'dns';
 import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
+import { MessagingService } from 'src/app/services/messaging.service';
 
 
 
@@ -21,7 +22,7 @@ export class ShowdataComponent implements OnInit {
   i:any
   j:any
   //set:any=new Set()
-  constructor(public crudservice: CrudService, private router: Router) {
+  constructor(public crudservice: CrudService, private router: Router,) {
   
     
 
@@ -29,6 +30,7 @@ export class ShowdataComponent implements OnInit {
 
   ngOnInit(): void {
     
+   
   
   this.j =1
       

@@ -1,48 +1,56 @@
-
-  <mat-toolbar color="primary">
-    Sign-Up with Fire base
-    <ul>
-      <li ><button class="btn3" mat-raised-button color="warn" routerLink="home">Home</button></li>
-    <li><button class="btn3"  mat-raised-button color="warn" routerLink="show">View Data</button></li>
+<mat-toolbar color="primary">
+  Sign-Up with Fire base
+  <ul>
+    <li><button class="btn3" mat-raised-button color="warn" routerLink="home">Home</button></li>
+    <li><button class="btn3" mat-raised-button color="warn" routerLink="show">View Data</button></li>
   </ul>
-    <ng-container *ngIf="authService.currentUser$ |async as user; else loginButton">
-        
+  <ng-container *ngIf="authService.currentUser$ |async as user; else loginButton">
+
     <button mat-button [matMenuTriggerFor]="userMenu">
       <mat-icon>account_circle</mat-icon>
       {{user.displayName}}
       <mat-icon>expand_more</mat-icon>
-      </button>
-    </ng-container>
-    <ng-template #loginButton >
+    </button>
+  </ng-container>
+  <ng-template #loginButton>
     <button mat-button routerLink="login">
       <mat-icon>login</mat-icon>
       Login
-      </button>
-    </ng-template>
-    </mat-toolbar>
-  
-    <div class="content">
-      <router-outlet></router-outlet>
-    </div>
-    <mat-menu #userMenu="matMenu">
-      <button mat-menu-item (click)="logout()">Logout
-        
-      </button>
-    </mat-menu>
-    <form required #basic="ngForm" class="search1">
-     <label class="label" for="search"> Search Here </label>
-    <input type="url" class="inCopy" [(ngModel)]="find.url" name="search" >
-    <button class="go" (click)="search()"  >GO</button>
-  </form>
-  <div  >
-  <iframe id="frm"  width="50%" height="400">
-    
-  </iframe>
-  <div id="Div1"><p id="copy1"></p>
-     
+    </button>
+  </ng-template>
+</mat-toolbar>
 
-  </div>
-  <button  class="Export" (click)="copy()">Export</button>
-  <button class="Export" id="dest" (click)="first()" >Get Right Ans </button>
+<div class="content">
+  <router-outlet></router-outlet>
+</div>
+<mat-menu #userMenu="matMenu">
+  <button mat-menu-item (click)="logout()">Logout
+
+  </button>
+</mat-menu>
+<form required #basic1="ngForm" class="search1">
+  <label class="label" for="search"> Search Here </label>
+  <input type="url" class="inCopy" [(ngModel)]="find.url" name="search">
+  <button class="go" [disabled]="!find.url" (click)="search()">GO</button>
+  <!-- Upload file  -->
+  <input type="file" (change)="chooseFile($event)" class="Up">
+  <button color="primary" (click)="upload1()" id="UPload"> Upload </button>
+  <div style="background-color: cadetblue;" class="err">{{msg}}</div>
+</form>
+<div>
+  <!-- iframe -->
+  <iframe id="frm" allow="clipboard-read; clipboard-write"  width="50%" height="400">
+
+  </iframe>
+  <div id="Div1">
+    <p id="copy1"></p>
+    <div id="inputDiv"> </div>
+ </div>
+
+ <!-- buttons  -->
+  <button class="Export" (click)="copy()">Export</button>
+  <button class="Export" [disabled]="this.Dis==1" id="dest" (click)="first()">Get Right Ans </button>
   <button class="Export" (click)="pushData()"> Push Data</button>
+  
+<!-- <button (click)="pushN()"> Notifications </button> -->
 </div>

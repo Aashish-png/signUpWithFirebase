@@ -25,3 +25,22 @@ exports.toDoreDirect= functions.https.onRequest((request,Response)=>{
 exports.sayHello= functions.https.onCall((data,context)=>{
   return `hello people`
 })
+///https on request
+exports.api= functions.https.onRequest((req,res)=>{
+
+  switch(req.method){
+    case 'GET':
+      res.send('it was a get request');
+      break;
+    case 'POST':
+      const body=req.body;
+      res.send(body)
+      break;
+    case 'DELETE':
+      res.send('it was a delete request')
+      break;
+    default:
+      res.send('it was a default request ')        
+  }
+
+}) 

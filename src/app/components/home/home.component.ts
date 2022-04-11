@@ -11,6 +11,7 @@ import {
   uploadBytesResumable,
 } from '@angular/fire/storage';
 import { HotToastService } from '@ngneat/hot-toast';
+import { MessagingService } from 'src/app/services/messaging.service';
 
 
 
@@ -20,6 +21,7 @@ import { HotToastService } from '@ngneat/hot-toast';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+
 
   msg:any
   // showData:dataObj;
@@ -33,6 +35,7 @@ export class HomeComponent implements OnInit {
    }
 
   ngOnInit(): void {
+  
     this.f=1
   }
 

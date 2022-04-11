@@ -214,29 +214,9 @@ export class CrudService implements OnInit {
       resolve(setDoc)
 
     })
-
-
   }
+  
 }
 
 
 
-
-
-//------garbase code in case 
-
-
-//       let questionId=Date.now()
-// const Ref = doc(this.fireservice, "contentAccountMapping","v4xP5UVYzf8Gf78j0ODd","quiz","v4xP5UVYzf8Gf78j0ODd", "questions")
-
-// // Add a new document with a generated id.
-// const docRef = setDoc(Ref, data,
-// )
-// resolve(docRef)
-
-
-// return new Promise(async (resolve, rejects) => {
-// const docRef = await addDoc(collection(this.fireservice, "contentAccountMapping","quiz","questions"),data,);
-// console.log("Document written with ID: ", docRef.id);
-// resolve(docRef)
-//   })

@@ -49,7 +49,7 @@ button.Export {
     display: inline;
     position: relative;
     left: 52%;
-    bottom: 260px;
+    bottom: 460px;
     padding: 10px;
     text-align: center;
     border-radius: 10px;
@@ -65,5 +65,42 @@ p#copy1 {
     font-size: initial;
     font-family: fangsong;
     background: bisque;
+}
+
+input.Up {
+    margin: 5px;
+    padding: 5px;
+    background: cadetblue;
+}
+button#UPload {
+    padding: 9px;
+    border-radius: 10px;
+    background-color: coral;
+    position: relative;
+    right: 10px;
+}
+.err {
+    margin-left: 37%;
+    margin-right: 42%;
+    border-radius: 10px;
+    padding: 10px;
+    font-family: cursive;
+}
+
+/* input#checkMate1 {
+    position: relative;
+    left: 244px;
+    bottom: 112px;
+} */
+#inputDiv{
+    background-color: bisque;
+     margin-right: 300px;
+     margin-left: 489px;
+     height: 98px;
+     position: relative;
+     bottom: 123px;
+     display: table-caption;
+     padding: 8px;
+     display: none;
 }
 

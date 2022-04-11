@@ -10,7 +10,7 @@ import { AngularFireModule } from "@angular/fire/compat";
 import { FormsModule } from '@angular/forms';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
-
+import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
 
 
 
@@ -33,6 +33,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { ShowdataComponent } from './components/showdata/showdata.component';
 import { CrudService } from './services/crud.service';
 import { UpdateComponent } from './components/update/update.component';
+import { MessagingService } from './services/messaging.service';
+import { getMessaging } from 'firebase/messaging';
+//import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -59,16 +62,19 @@ import { UpdateComponent } from './components/update/update.component';
     CommonModule,
     FormsModule,
     AngularFireModule,
+    AngularFireMessagingModule,
     
     
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
-    HotToastModule.forRoot()
+  
+    HotToastModule.forRoot(),
+    
    
   ],
-  providers: [CrudService],
+  providers: [CrudService,MessagingService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
