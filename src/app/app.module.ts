@@ -33,7 +33,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { ShowdataComponent } from './components/showdata/showdata.component';
 import { CrudService } from './services/crud.service';
 import { UpdateComponent } from './components/update/update.component';
-import { MessagingService } from './services/messaging.service';
+// import { MessagingService } from './services/messaging.service';
 import { getMessaging } from 'firebase/messaging';
 //import { ServiceWorkerModule } from '@angular/service-worker';
 
@@ -74,7 +74,7 @@ import { getMessaging } from 'firebase/messaging';
     
    
   ],
-  providers: [CrudService,MessagingService],
+  providers: [CrudService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

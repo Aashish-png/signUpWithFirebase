@@ -7,20 +7,15 @@ import {
   uploadBytes,
   uploadBytesResumable,
 } from '@angular/fire/storage';
+import { environment } from "../environments/environment";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import {
   Router, NavigationStart, NavigationEnd,
   NavigationCancel, NavigationError, Event
 } from '@angular/router';
-import { getMessaging } from "firebase/messaging";
-import { verify } from 'crypto';
-import { docData } from 'rxfire/firestore';
-import { throwError } from 'rxjs';
-
 
 import { AuthenticationService } from './services/authentication.service';
 import { CrudService } from './services/crud.service';
-import { messaging } from 'firebase-admin';
-import { MessagingService } from './services/messaging.service';
 
 @Component({
   selector: 'app-root',
@@ -38,18 +33,56 @@ export class AppComponent implements OnInit {
   Ufile: string;
   msg: any;
   Dis: any;
+  message: any;
   
   constructor(public authService: AuthenticationService, private router: Router,
-    public crudSer: CrudService, private MsgS:MessagingService) { }
+    public crudSer: CrudService, ) { }
   Find: any
 
 
   ngOnInit(): void {
    debugger
-   this.MsgS.requstPer("Aashish")
+   this.requestPermission()
+   this.listen()
    
     
   }
+  ///for notifucations
+
+   
+  
+  requestPermission() {
+
+    const messaging = getMessaging();
+   
+    // messaging.getToken({vapidKey: "BKagOny0KF_2pCJQ3m....moL0ewzQ8rZu"});
+
+    getToken(messaging, { vapidKey: environment.firebase.vapidKey }).then((currentToken) => {
+      if (currentToken) {
+        console.log("Hurraaa!!! we got the token.....")
+        console.log(currentToken);
+        // Send the token to your server and update the UI if necessary
+        // ...
+      } else {
+        // Show permission request UI
+        console.log('No registration token available. Request permission to generate one.');
+        // ...
+      }
+    }).catch((err) => {
+      console.log('An error occurred while retrieving token. ', err);
+      // ...
+    });
+
+  }
+
+listen() {
+  const messaging = getMessaging();
+  //messaging.getToken({vapidKey: "BKagOny0KF_2pCJQ3m....moL0ewzQ8rZu"});
+  onMessage(messaging, (payload) => {
+    console.log('Message received. ', payload);
+    this.message=payload;
+  });
+}
   //for logout 
   logout() {
     this.authService.logout().subscribe(() => {
