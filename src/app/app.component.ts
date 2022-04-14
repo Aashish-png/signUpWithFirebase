@@ -13,6 +13,7 @@ import {
   Router, NavigationStart, NavigationEnd,
   NavigationCancel, NavigationError, Event
 } from '@angular/router';
+import { onBackgroundMessage } from "firebase/messaging/sw";
 
 import { AuthenticationService } from './services/authentication.service';
 import { CrudService } from './services/crud.service';
@@ -34,33 +35,40 @@ export class AppComponent implements OnInit {
   msg: any;
   Dis: any;
   message: any;
-  
+
   constructor(public authService: AuthenticationService, private router: Router,
-    public crudSer: CrudService, ) { }
+    public crudSer: CrudService,) { }
   Find: any
 
 
   ngOnInit(): void {
-   debugger
-   this.requestPermission()
-   this.listen()
-   
-    
-  }
-  ///for notifucations
+    debugger
+    this.requestPermission()
+    this.listen()
+    this.listen2()
 
-   
-  
+
+  }
+   //for logout  in  authentication
+   logout() {
+    this.authService.logout().subscribe(() => {
+      this.router.navigate(['']);
+    })
+  }
+
+  ///for notifucations token
+
   requestPermission() {
 
     const messaging = getMessaging();
-   
+
     // messaging.getToken({vapidKey: "BKagOny0KF_2pCJQ3m....moL0ewzQ8rZu"});
 
     getToken(messaging, { vapidKey: environment.firebase.vapidKey }).then((currentToken) => {
       if (currentToken) {
         console.log("Hurraaa!!! we got the token.....")
         console.log(currentToken);
+
         // Send the token to your server and update the UI if necessary
         // ...
       } else {
@@ -74,21 +82,36 @@ export class AppComponent implements OnInit {
     });
 
   }
+  /////listen
+  listen() {
+    const messaging = getMessaging();
 
-listen() {
-  const messaging = getMessaging();
-  //messaging.getToken({vapidKey: "BKagOny0KF_2pCJQ3m....moL0ewzQ8rZu"});
-  onMessage(messaging, (payload) => {
-    console.log('Message received. ', payload);
-    this.message=payload;
-  });
-}
-  //for logout 
-  logout() {
-    this.authService.logout().subscribe(() => {
-      this.router.navigate(['']);
-    })
+    onMessage(messaging, (payload) => {
+      console.log('Message received. ', payload);
+      this.message = payload;
+    });
   }
+
+  /////back listen
+  listen2() {
+    const messaging = getMessaging();
+    onBackgroundMessage(messaging, (payload) => {
+      console.log('[firebase-messaging-sw.js] Received background message ', payload);
+      // Customize notification here
+      const notificationTitle = 'Background Message Title';
+      const notificationOptions = {
+        body: 'Background Message body.',
+        icon: '/firebase-logo.png'
+      };
+      this.message = payload
+      console.log(this.message)
+
+      // this.registration.showNotification(notificationTitle,
+      //   notificationOptions);
+    });
+  }
+
+ 
   // when we click go button this fucntion runs
   search() {
     debugger
@@ -100,27 +123,27 @@ listen() {
     doc.src = this.Find
   }
 
- 
+
 
   // ****************************Export buttom***********************
   copy() {
     debugger
-    
+
     navigator.clipboard.readText().then(
       clipText => document.getElementById("copy1").innerText = clipText)
 
-      if(this.Dis==1){
-        let X = document.getElementById('checkMate1')
-        X.remove();
-        let Y = document.getElementById('checkMate2')
-        Y.remove();
-        let Z = document.getElementById('checkMate3')
-        Z.remove();
-        let W = document.getElementById('checkMate4')
-        W.remove();
-  
-      }
-      this.Dis=undefined
+    if (this.Dis == 1) {
+      let X = document.getElementById('checkMate1')
+      X.remove();
+      let Y = document.getElementById('checkMate2')
+      Y.remove();
+      let Z = document.getElementById('checkMate3')
+      Z.remove();
+      let W = document.getElementById('checkMate4')
+      W.remove();
+
+    }
+    this.Dis = undefined
   }
   //------------------Get Ans-----------------------------
   first() {
@@ -128,7 +151,7 @@ listen() {
     let val = document.getElementById("copy1").innerText
     this.copyT = val
     console.log(this.copyT)
-   
+
     //split the div content
     var arr = this.copyT.split("\n\n");
     console.log(arr)
@@ -136,7 +159,7 @@ listen() {
 
     this.ques1 = arr[0]
     var option = arr[1]
-    if(option==undefined){
+    if (option == undefined) {
       alert("Export the correct data first ")
     }
     //---------------split the options ----------------
@@ -161,18 +184,18 @@ listen() {
       }
       x.id = "checkMate" + k
 
-     // var L = document.createElement('label')
-     // L.id = "L1" + k
-     // L.appendChild(document.createTextNode(k))
+      // var L = document.createElement('label')
+      // L.id = "L1" + k
+      // L.appendChild(document.createTextNode(k))
 
       let h = this.Narr[i]
       x.appendChild(document.createTextNode(`${h}`))
-     document.getElementById('inputDiv').append(x)
-       this.Dis=1
-        
-       document.getElementById('inputDiv').style. display= "table-caption";
+      document.getElementById('inputDiv').append(x)
+      this.Dis = 1
+
+      document.getElementById('inputDiv').style.display = "table-caption";
     }
-    
+
 
 
   }
@@ -183,7 +206,7 @@ listen() {
     let options1 = []
 
     let A = document.querySelector('#checkMate1') as HTMLInputElement
-    if(A==null){
+    if (A == null) {
       alert("No data to send, get the Data first")
     }
     let B = document.querySelector('#checkMate2') as HTMLInputElement
@@ -204,7 +227,7 @@ listen() {
       D = this.Narr[3]
       correct.push(D)
     }
-   
+
     for (let i in this.Narr) {
       if (i == "0") {
         A = this.Narr[0]
@@ -234,40 +257,40 @@ listen() {
     data['correct'] = correct
     data['option'] = options1
 
-    if(correct.length==0){
+    if (correct.length == 0) {
       alert("plsese select the corect ans then proceed ")
     }
     //  -----------------------using Services-------------- 
-    if(correct.length!=0){
-    this.crudSer.addData(data).then((result) => {
-      console.log(result)
-      alert("data added")
+    if (correct.length != 0) {
+      this.crudSer.addData(data).then((result) => {
+        console.log(result)
+        alert("data added")
 
-      ///-------------destroying the input elements and labels----------------
-      let X = document.getElementById('checkMate1')
-      X.remove();
-      let Y = document.getElementById('checkMate2')
-      Y.remove();
-      let Z = document.getElementById('checkMate3')
-      Z.remove();
-      let W = document.getElementById('checkMate4')
-      W.remove();
+        ///-------------destroying the input elements and labels----------------
+        let X = document.getElementById('checkMate1')
+        X.remove();
+        let Y = document.getElementById('checkMate2')
+        Y.remove();
+        let Z = document.getElementById('checkMate3')
+        Z.remove();
+        let W = document.getElementById('checkMate4')
+        W.remove();
 
-      // let P = document.getElementById('L11')
-      // P.remove()
-      // let Q = document.getElementById('L12')
-      // Q.remove()
-      // let R = document.getElementById('L13')
-      // R.remove()
-      // let S = document.getElementById('L14')
-      // S.remove()
-       
-      this.Dis=undefined
+        // let P = document.getElementById('L11')
+        // P.remove()
+        // let Q = document.getElementById('L12')
+        // Q.remove()
+        // let R = document.getElementById('L13')
+        // R.remove()
+        // let S = document.getElementById('L14')
+        // S.remove()
 
-    }).catch((err) => {
-      console.log(err)
-    })
-  }
+        this.Dis = undefined
+
+      }).catch((err) => {
+        console.log(err)
+      })
+    }
   }
 
 
@@ -279,14 +302,15 @@ listen() {
     console.log(this.file)
     //this.f=undefined
     console.log(this.file.size)
-    if(this.file.size<10000){
-      this.file=undefined
-      this.msg="size of file is less then 10kb"
+    if (this.file.size < 10000) {
+      this.file = undefined
+      this.msg = "size of file is less then 10kb"
       alert("Upload bigger size of file ")
     }
   }
-
+ //when we click on upload button
   upload1() {
+    document.getElementById('err').style.display="block";
     if (this.file == undefined) {
       this.msg = "Please select a file first"
     }
@@ -341,11 +365,5 @@ listen() {
     );
   }
 
-////
-// pushN(){
-//   const messaging = getMessaging();
-// }
-
-
-
+  
 }

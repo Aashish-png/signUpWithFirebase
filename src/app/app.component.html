@@ -28,6 +28,7 @@
 
   </button>
 </mat-menu>
+<!-- form for ifrm -->
 <form required #basic1="ngForm" class="search1">
   <label class="label" for="search"> Search Here </label>
   <input type="url" class="inCopy" [(ngModel)]="find.url" name="search">
@@ -35,7 +36,7 @@
   <!-- Upload file  -->
   <input type="file" (change)="chooseFile($event)" class="Up">
   <button color="primary" (click)="upload1()" id="UPload"> Upload </button>
-  <div style="background-color: cadetblue;" class="err">{{msg}}</div>
+  <div style="background-color: cadetblue;" id="err">{{msg}}</div>
 </form>
 <div>
   <!-- iframe -->
@@ -49,8 +50,8 @@
 
  <!-- buttons  -->
   <button class="Export" (click)="copy()">Export</button>
-  <button class="Export" [disabled]="this.Dis==1" id="dest" (click)="first()">Get Right Ans </button>
-  <button class="Export" (click)="pushData()"> Push Data</button>
+  <button class="Export1" [disabled]="this.Dis==1" id="dest" (click)="first()">Get Right Ans </button>
+  <button class="Export2" (click)="pushData()"> Push Data</button>
   
 <!-- <button (click)="pushN()"> Notifications </button> -->
 </div>

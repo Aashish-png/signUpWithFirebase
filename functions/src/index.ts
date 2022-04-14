@@ -1,9 +1,5 @@
-
-
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin"
-
-
 
 
 var serviceAccount = require("E:/angular/angular-sign-up/assd.json");
@@ -13,14 +9,12 @@ admin.initializeApp({
 });
 
 //admin.initializeApp();
-
-
+//export a noitification firebase functions
 
 exports.notification = functions.firestore
   .document('access/{docId}')
   .onUpdate( (change, context) => { 
 
- //console.log("function runs",change.after.data())
 let id = context.params.docId
  const oldvalue=change.before.data();
 //console.log("old values ="+ oldvalue)
@@ -28,20 +22,19 @@ const newValue=change.after.data();
 //console.log("New value =" + newValue)
 
 console.log(newValue.isDeleted)
-if(newValue===oldvalue){return }
+if(newValue===oldvalue){return }//check if data has changed 
 
+//store notification value 
 const payload={
   notification:{
-    title:  "hello there new notify",
-    body: "this is body"
+    title:  "this is title ",
+    body: newValue.email,
 
   }
   
 };
 
-//to get tokenn
-//const databaseRoot=functions.firestore.('access/{docId}/token')
-// try {
+// get the stored token form firebstore
   
 const db=admin.firestore()
  const database=db.collection(`access/${id}/users` ).doc(newValue.quizId).get();
@@ -49,10 +42,10 @@ const db=admin.firestore()
  database.then((snapshot)=>{
    console.log("newS==>"+snapshot.data())
         
-const fcmt=  snapshot.get('token')       //  snapshot.get('token')
+const fcmt=  snapshot.get('token')       
 console.log(fcmt)
 console.log(payload)
-  return admin.messaging().sendToDevice(fcmt,payload).then(res=>{              
+  return admin.messaging().sendToDevice(fcmt,payload).then(res=>{      //sending msg to app           
     console.log('notification sent ==> '+res)                   
     }).catch(err=>{                                     
     console.log('notification sent !==:(> '+err)            
@@ -60,10 +53,7 @@ console.log(payload)
 
 })
 
-// } catch (error) {
 
-// console.log(error)
-// }
 });
 
 // exports.randomNumber= functions.https.onRequest((request,Response)=>{
