@@ -1,8 +1,6 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin"
 
-
-
 var serviceAccount = require("E:/angular/angular-sign-up/assd.json");
 
 admin.initializeApp({
@@ -12,76 +10,99 @@ admin.initializeApp({
 //admin.initializeApp();
 //export a noitification firebase functions
 
-
+const db=admin.firestore()
 
 exports.createUser = functions.firestore
-    .document('accesses/{accessesId}')
-    .onCreate((snap, context) => {
-      // Get an object representing the document
-      // e.g. {'name': 'Marie', 'age': 66}
-      const newValue = snap.data();
-      const id=context.params.accessesId
-
-      console.log(newValue)
-      console.log(id)
-
-      const quizId=newValue.quizId
+    .document('accesses/{accessId}')
+    .onCreate(async (snap, context) => {
+      
+      const newValue = snap.data();//get data in form of object
+        const quizId=newValue.quizId     //get quizId and contentId from accesses
       const contentId= newValue.contentId
-
-      let quizDetails=getQuizdetails( contentId, quizId);//get the name 
        
-      console.log(quizDetails)
-
-      let userDetails=getUserDetails(contentId)//get the token
-      console.log(userDetails)
+     
     
-      //store notification value 
-const payload={
-  notification:{
-    title: `${quizDetails}`,
-    body: "this is body",
-
-  }
-};
-const db=admin.firestore()
- const database=db.collection(`users` ).doc(contentId).get();
+     
+      let quizDetails:any=await getQuizdetails( contentId, quizId);//return a promise
+      console.log("qz==>"+quizDetails)
+      console.log("name==>"+quizDetails.quizName)//quiz  name
  
- database.then((snapshot)=>{
+  if(quizDetails && quizDetails.quizName ){         //check for value 
+ const database=db.collection(`user` ).doc(contentId).get();
+ 
+ database.then( (snapshot)=>{
    console.log("newS==>"+snapshot.data())
-        
-const fcmt=  snapshot.get('token')       
+ 
+
+ 
+const fcmt=  snapshot.get('token')     //get token from user collections  
 console.log(fcmt)
+console.log("THIS IS =>"+quizDetails)
+
+        //store notification value 
+        console.log("quizvalue==> "+quizDetails+ " fcmt==> "+fcmt)
+    const payload={
+              notification:{
+                     title: quizDetails.quizName,
+                      body: `body`,
+
+           }
+        };
 console.log(payload)
-  return admin.messaging().sendToDevice(fcmt,payload).then(res=>{      //sending msg to app           
-    console.log('notification sent ==> '+res)                   
-    }).catch(err=>{                                     
-    console.log('notification sent !==:(> '+err)            
+    return admin.messaging().sendToDevice(fcmt,payload).then(res=>{      //sending msg to app           
+      console.log('notification sent ==> '+res)                   
+        }).catch(err=>{                                     
+      console.log('notification sent !==:(> '+err)            
+       })
+   //   }
+    })
+  }
+    
     })
 
+
+
     
-    });
-  })
 
 ///------------function definations----------------
 function getQuizdetails(contentId:any,quizId: any) {
+  return new Promise(async (resolve, rejects) => {
+
   const db=admin.firestore()
 
-  const database=db.collection(`contentAccountMapping/${contentId}/quiz` ).doc(quizId).get();
-  
-  database.then((result)=>{
-          let v= result.get('quizName')
-          return v
+  // const database=
+  db.collection(`contentAccountMapping/${contentId}/quiz` ).doc(quizId).get().then((result)=>{
+
+        console.log("Result==>>"+result.data())
+        resolve(result.data())
+      
+  }).catch((res)=>{
+
+    console.log("catch==>"+res)
+    rejects(res)
   })
+})
 }
+  
 
-function getUserDetails(contentId: any) {
-  const db=admin.firestore()
-  const database1=db.collection(`users/${contentId}` ).doc(contentId).get();
-   database1.then((Result1)=>{
-     return Result1.get('token')
-   })
-}
-    
+
+
+
+
+
+
+
+
+
+
+// function getUserDetails(contentId: any) {
+//   const db=admin.firestore()
+//   const database1=db.collection(`user/${contentId}` ).doc(contentId).get();
+//    database1.then((Result1)=>{
+//      return Result1.get('token')
+//    })
+// }
+    // }
 //_-------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------
 //****************************************************onUpdatefunction********************* */
