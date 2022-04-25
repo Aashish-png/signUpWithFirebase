@@ -10,11 +10,6 @@ import {
   uploadBytes,
   uploadBytesResumable,
 } from '@angular/fire/storage';
-import { finalize, from, map, Observable, switchMap } from 'rxjs';
-import { timeStamp } from 'console';
-import { resolve } from 'dns';
-import { rejects } from 'assert';
-
 
 
 
@@ -32,7 +27,7 @@ export class CrudService implements OnInit {
 
 
 
-  constructor(public fireservice: Firestore, public storage: Storage) { }
+  constructor(public fireservice: Firestore, public storage: Storage,) { }
 
   ngOnInit(): void {
 
@@ -215,7 +210,42 @@ export class CrudService implements OnInit {
 
     })
   }
+
+  ///user notifications for block
+
+  async userData(){
+    await setDoc(doc(this.fireservice, "user/cpmP2gQm1GRtwudvHTFT/userSetting/cpmP2gQm1GRtwudvHTFT"), {
+      notification: "false",
+        });
+  }
+
+  //user notifications for allow
+  async userData1(){
+    await setDoc(doc(this.fireservice, "user/cpmP2gQm1GRtwudvHTFT/userSetting/cpmP2gQm1GRtwudvHTFT"), {
+      notification: "true",
+        });
+  }
   
+
+
+
+  //------service worker notificatios
+
+
+
+  // addSubscription(sub: PushSubscription) {
+  //   return lastValueFrom(
+  //     this.http.post('http://localhost:4200/api/subscription', { sub })
+  //   );
+  // }
+  
+
+  // notifications(data: string) {
+  //   return lastValueFrom(
+  //     this.http.post('http://localhost:3000/api/notifications', { data })
+  //   );
+  // }
+
 }
 
 

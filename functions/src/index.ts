@@ -17,48 +17,51 @@ exports.createUser = functions.firestore
     .onCreate(async (snap, context) => {
       
       const newValue = snap.data();//get data in form of object
-        const quizId=newValue.quizId     //get quizId and contentId from accesses
+      const quizId  =  newValue.quizId     //get quizId and contentId from accesses
       const contentId= newValue.contentId
-       
+      
+      let notifypermission:any=await Getuser(contentId)
+     console.log("true===>>>"+notifypermission.notification)
+if(notifypermission.notification==true){
      
-    
-     
-      let quizDetails:any=await getQuizdetails( contentId, quizId);//return a promise
+    let quizDetails:any=await getQuizdetails( contentId, quizId);//return a promise
+      
       console.log("qz==>"+quizDetails)
       console.log("name==>"+quizDetails.quizName)//quiz  name
  
-  if(quizDetails && quizDetails.quizName ){         //check for value 
- const database=db.collection(`user` ).doc(contentId).get();
  
- database.then( (snapshot)=>{
-   console.log("newS==>"+snapshot.data())
+    if(quizDetails && quizDetails.quizName ){         //check for value 
+         const database=db.collection(`user` ).doc(contentId).get();
+ 
+          database.then( (snapshot)=>{
+          console.log("newS==>"+snapshot.data())
  
 
  
-const fcmt=  snapshot.get('token')     //get token from user collections  
-console.log(fcmt)
-console.log("THIS IS =>"+quizDetails)
+          const fcmt=  snapshot.get('token')     //get token from user collections  
+          console.log(fcmt)
+          console.log("THIS IS =>"+quizDetails)
 
         //store notification value 
-        console.log("quizvalue==> "+quizDetails+ " fcmt==> "+fcmt)
-    const payload={
+          console.log("quizvalue==> "+quizDetails+ " fcmt==> "+fcmt)
+      const payload={
               notification:{
                      title: quizDetails.quizName,
                       body: `body`,
 
            }
         };
-console.log(payload)
-    return admin.messaging().sendToDevice(fcmt,payload).then(res=>{      //sending msg to app           
-      console.log('notification sent ==> '+res)                   
-        }).catch(err=>{                                     
-      console.log('notification sent !==:(> '+err)            
-       })
+        console.log(payload)
+            return admin.messaging().sendToDevice(fcmt,payload).then(res=>{      //sending msg to app           
+              console.log('notification sent ==> '+res)                   
+                }).catch(err=>{                                     
+              console.log('notification sent !==:(> '+err)            
+               })
    //   }
     })
   }
-    
-    })
+ }
+})
 
 
 
@@ -83,9 +86,21 @@ function getQuizdetails(contentId:any,quizId: any) {
   })
 })
 }
-  
+  ///getuser setting 
 
+function Getuser(contentId:any){
+  return new Promise(async (resolve, rejects) => {
+  const db=admin.firestore()
+  db.collection(`user/${contentId}/userSetting`).doc(contentId).get().then((result)=>{
+        console.log("ture or =>"+result);
+        resolve(result.data())
+  }).catch((err)=>{
+    rejects(err)
+    console.log("err==>"+err);
+  })
 
+})
+}
 
 
 

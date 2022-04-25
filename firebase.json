@@ -19,6 +19,17 @@
     },
     "ui": {
       "enabled": true
+    },
+    "hosting": {
+      "port": 5033
     }
+  },
+  "hosting": {
+    "public": "dist/angular-sign-up",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
   }
 }

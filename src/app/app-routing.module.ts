@@ -12,6 +12,7 @@ import {
 } from '@angular/fire/auth-guard';
 import { ShowdataComponent } from './components/showdata/showdata.component';
 import { UpdateComponent } from './components/update/update.component';
+import { ExportComponent } from './components/export/export.component';
 
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
@@ -47,6 +48,9 @@ const routes: Routes = [
     component:UpdateComponent,
     path:"update/:id"
   },
+  {component:ExportComponent,
+    path:"export"
+  }
 ]
 
 @NgModule({

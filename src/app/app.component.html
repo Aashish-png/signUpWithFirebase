@@ -1,8 +1,10 @@
 <mat-toolbar color="primary">
-  Sign-Up with Fire base
+  Angular Project
   <ul>
-    <li><button class="btn3" mat-raised-button color="warn" routerLink="home">Home</button></li>
-    <li><button class="btn3" mat-raised-button color="warn" routerLink="show">View Data</button></li>
+    <li><button class="btn0" mat-raised-button color="warn" routerLink="">Home</button></li>
+    <li><button class="btn1" mat-raised-button color="warn" routerLink="home">Add Data</button></li>
+    <li><button class="btn2" mat-raised-button color="warn" routerLink="show">View Data</button></li>
+    <li><button class="btn3" mat-raised-button color="warn" routerLink="export">Export</button></li>
   </ul>
   <ng-container *ngIf="authService.currentUser$ |async as user; else loginButton">
 
@@ -23,35 +25,57 @@
 <div class="content">
   <router-outlet></router-outlet>
 </div>
-<mat-menu #userMenu="matMenu">
-  <button mat-menu-item (click)="logout()">Logout
+<mat-menu #userMenu="matMenu"  class="menu">
+  <button mat-menu-item (click)="logout()">Logout <br>
 
-  </button>
+    
+    </button>
+
+    <span style="color: aliceblue;"> Notification</span>  
+    <br>
+    <mat-button-toggle-group id="toggle" name="fontStyle" aria-label="Font Style">
+      <mat-button-toggle value="bold" (click)=" OffNotify()">OFF</mat-button-toggle>
+      <mat-button-toggle value="italic" (click)="OnNotify()">ON</mat-button-toggle>
+      
+    </mat-button-toggle-group>
+ 
 </mat-menu>
 <!-- form for ifrm -->
-<form required #basic1="ngForm" class="search1">
+<!-- <form required #basic1="ngForm" class="search1">
   <label class="label" for="search"> Search Here </label>
   <input type="url" class="inCopy" [(ngModel)]="find.url" name="search">
   <button class="go" [disabled]="!find.url" (click)="search()">GO</button>
-  <!-- Upload file  -->
-  <input type="file" (change)="chooseFile($event)" class="Up">
+  <Upload file  -->
+  <!-- <input type="file" (change)="chooseFile($event)" class="Up">
   <button color="primary" (click)="upload1()" id="UPload"> Upload </button>
   <div style="background-color: cadetblue;" id="err">{{msg}}</div>
 </form>
-<div>
+<div> -->
   <!-- iframe -->
-  <iframe id="frm" allow="clipboard-read; clipboard-write"  width="50%" height="400">
+  <!-- <iframe id="frm" allow="clipboard-read; clipboard-write"  width="50%" height="400">
 
   </iframe>
   <div id="Div1">
     <p id="copy1"></p>
     <div id="inputDiv"> </div>
- </div>
+ </div> -->
 
  <!-- buttons  -->
+ <!-- [aria-label]="alertsEnabled ?'Disable alerts' : 'Enable alerts'" -->
+ <!-- <mat-button-toggle >
+  <mat-icon>notifications</mat-icon> notify
+</mat-button-toggle> -->
+<!-- <mat-button-toggle-group id="toggle" name="fontStyle" aria-label="Font Style">
+  <mat-button-toggle value="bold" (click)=" OffNotify()">OFF</mat-button-toggle>
+  <mat-button-toggle value="italic" (click)="OnNotify()">ON</mat-button-toggle>
+  
+</mat-button-toggle-group> -->
+
+<!-- Rounded switch -->
+<!-- 
   <button class="Export" (click)="copy()">Export</button>
   <button class="Export1" [disabled]="this.Dis==1" id="dest" (click)="first()">Get Right Ans </button>
-  <button class="Export2" (click)="pushData()"> Push Data</button>
+  <button class="Export2" (click)="pushData()"> Push Data</button> -->
   
 <!-- <button (click)="pushN()"> Notifications </button> -->
-</div>
+<!-- </div> --> 

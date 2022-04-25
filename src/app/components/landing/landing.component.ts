@@ -12,4 +12,17 @@ export class LandingComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  open(){
+   let Q=  document.getElementById('question')
+
+      Q.classList.toggle('show')
+    
+  }
+  open1(){
+    let Q=  document.getElementById('side')
+ 
+       Q.classList.toggle('show')
+     
+   }
+
 }

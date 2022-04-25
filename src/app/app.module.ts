@@ -14,7 +14,7 @@ import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
 
 
 
-
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -35,7 +35,10 @@ import { CrudService } from './services/crud.service';
 import { UpdateComponent } from './components/update/update.component';
 // import { MessagingService } from './services/messaging.service';
 import { getMessaging } from 'firebase/messaging';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { ExportComponent } from './components/export/export.component';
 //import { ServiceWorkerModule } from '@angular/service-worker';
+
 
 @NgModule({
   declarations: [
@@ -46,6 +49,7 @@ import { getMessaging } from 'firebase/messaging';
     HomeComponent,
     ShowdataComponent,
     UpdateComponent,
+    ExportComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,15 +67,19 @@ import { getMessaging } from 'firebase/messaging';
     FormsModule,
     AngularFireModule,
     AngularFireMessagingModule,
-    
+    MatButtonToggleModule,
     
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   
-    HotToastModule.forRoot(),
-    
    
   ],
   providers: [CrudService],

@@ -9,12 +9,30 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&amp;display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="manifest" href="./manifest.json" />
+  <link rel="manifest" href="./manifest.json"/>
  
-  <!-- <meta name="theme-color" content="#1976d2"> -->
+  
+  <!-- <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#1976d2"> -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#1976d2">
 </head>
 <body class="mat-typography">
   <app-root></app-root>
  
+   <noscript>Please enable JavaScript to continue using this application.</noscript>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .register('/service-worker.js')
+        .then(function(registration) {
+          console.log('Service Worker registered');
+        })
+        .catch(function(err) {
+          console.log('Service Worker registration failed: ', err);
+        });
+    }
+  </script>
+  <script src="/global-sw.js"></script>
 </body>
 </html>

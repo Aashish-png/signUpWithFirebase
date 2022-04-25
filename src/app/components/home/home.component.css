@@ -9,7 +9,9 @@
     bottom: 60px;
 }   
 
- section{
+
+
+section{
     background-image: url('src/assets/supernova-rainbow-explosion_1920x1080_64-hd.jpg');
     background-size: cover;
     overflow: hidden;
